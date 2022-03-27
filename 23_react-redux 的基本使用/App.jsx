@@ -5,7 +5,7 @@ import store from './redux/store'
 export default class App extends Component {
   render() {
     return (
-      <div className="container">
+      <div>
         {/* 给容器组件传递 store */}
         <Count store={store}/>
       </div>

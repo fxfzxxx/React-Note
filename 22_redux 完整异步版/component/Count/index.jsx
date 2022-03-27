@@ -1,41 +1,44 @@
 import React, { Component } from "react"
 import { Button } from "antd"
 import store from "../../redux/store"
+import {
+  createIncrementAction,
+  createDecrementAction,
+  createIncrementAsyncAction,
+} from "../../redux/count_action"
 import "antd/dist/antd.css"
 
 export default class Count extends Component {
-   // state ={count:0}
-   //检测 redux 中状态的变化,还要变化,就调用 render
-   componentDidMount() {
-      store.subscribe(()=>{
-         this.setState({})
-      })
-   }
-   //加
+  // state ={count:0}
+  //检测 redux 中状态的变化,还要变化,就调用 render
+  componentDidMount() {
+    store.subscribe(() => {
+      this.setState({})
+    })
+  }
+  //加, 通过action 函数创建 action
   increment = () => {
-   const {value} = this.selectNumber
-   store.dispatch({type:'increment',data:Number(value)})
+    const { value } = this.selectNumber
+    store.dispatch(createIncrementAction(Number(value)))
   }
   //减
   decrement = () => {
-   const {value} = this.selectNumber
-   store.dispatch({type:'decrement',data:Number(value)})
+    const { value } = this.selectNumber
+    store.dispatch(createDecrementAction(Number(value)))
   }
   //如果是奇数加
   incrementIfOdd = () => {
-   const {value} = this.selectNumber
-   //因为初始值就是设置的是 0 而非一个对象, 所以不用解构赋值
-   const count = store.getState()
-   if(count%2 !== 0) {
-      store.dispatch({type:'increment',data:Number(value)})
-   }
+    const { value } = this.selectNumber
+    //因为初始值就是设置的是 0 而非一个对象, 所以不用解构赋值
+    const count = store.getState()
+    if (count % 2 !== 0) {
+      store.dispatch({ type: "increment", data: Number(value) })
+    }
   }
   //异步加
   incrementAsync = () => {
-   const {value} = this.selectNumber
-   setTimeout(()=>{
-      store.dispatch({type:'increment',data:Number(value)})
-   },1000)
+    const { value } = this.selectNumber
+    store.dispatch(createIncrementAsyncAction(Number(value),1000))
   }
   render() {
     return (
