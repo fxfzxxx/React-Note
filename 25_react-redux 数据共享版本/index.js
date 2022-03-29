@@ -6,7 +6,6 @@ import {Provider} from 'react-redux';
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* 为了给所有的组件都传入 store */}
     <Provider store={store}>
       <App />
     </Provider>

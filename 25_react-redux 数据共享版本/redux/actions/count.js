@@ -1,6 +1,6 @@
 //专门用来为 Count 组件生成 action 对象
 
-import { INCREMENT,DECREMENT } from "./constant"
+import { INCREMENT,DECREMENT } from "../constant"
 
 //小括号包裹用来省略 return 返回一个对象. 如果不包裹就会把花括号内当成函数
 export const createIncrementAction = (data) => ({type:INCREMENT,data})

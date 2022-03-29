@@ -2,9 +2,9 @@
 import React, { Component } from "react"
 
 import {
-  increment,
-  decrement,
-  incrementAsync,
+  createIncrementAction,
+  createDecrementAction,
+  createIncrementAsyncAction,
 } from "../../redux/actions/count"
 
 //引入 connect 用于连接 UI 组件和 redux
@@ -14,32 +14,31 @@ class Count extends Component {
    //加
    increment = () => {
      const { value } = this.selectNumber
-     this.props.increment(Number(value))
+     this.props.plus(Number(value))
    }
    //减
    decrement = () => {
      const { value } = this.selectNumber
-     this.props.decrement(Number(value))
+     this.props.minus(Number(value))
    }
    //如果是奇数加
    incrementIfOdd = () => {
      const { value } = this.selectNumber
      if(this.props.a%2 === 1) {
-       this.props.increment(Number(value))
+       this.props.plus(Number(value))
      }
    }
    //异步加
    incrementAsync = () => {
      const { value } = this.selectNumber
-     this.props.incrementAsync(Number(value),1000)
+     this.props.asyncPlus(Number(value),1000)
    }
    render() {
      console.log(this.props);
      return (
-       <div className="Count">
-          <h2> I'm Count Component. </h2>
-         <h2>  The total number of person below is: {this.props.person.length}</h2>
-         <h3>The current sum is: {this.props.count} </h3>
+       <div>
+          <h2> 我是 Count 组件, 下方总人数:{this.props.ren.length}</h2>
+         <h3>当前求和为: {this.props.he} </h3>
          <select ref={(c) => (this.selectNumber = c)}>
            <option value="1">1</option>
            <option value="2">2</option>
@@ -48,8 +47,8 @@ class Count extends Component {
          &nbsp;
          <button onClick={this.increment}>+</button>&nbsp;
          <button onClick={this.decrement}>-</button>&nbsp;
-         <button onClick={this.incrementIfOdd}>Add if sum is odd</button>&nbsp;
-         <button onClick={this.incrementAsync}>Asyc add</button>&nbsp;
+         <button onClick={this.incrementIfOdd}>当前求和为奇数+</button>&nbsp;
+         <button onClick={this.incrementAsync}>异步加</button>&nbsp;
        </div>
      )
    }
@@ -57,13 +56,12 @@ class Count extends Component {
 
 //创建并暴露一个容器组件, 连接 UI 组件并传递 props
 // dispatch 精简写法, 由 react-rudux 优化, 自动调用 dispatch
-// 这个 connect 其实就是把容器的东西都传给 UI
 export default connect(
-  (state) => ({ count:state.count, person:state.person }),
+  (state) => ({ he:state.he, ren:state.ren }),
   {
-     increment,
-     decrement,
-     incrementAsync,
+     plus:createIncrementAction,
+     minus:createDecrementAction,
+     asyncPlus:createIncrementAsyncAction
   }
 
   //dispatch 一般写法
